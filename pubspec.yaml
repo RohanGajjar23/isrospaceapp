@@ -1,0 +1,44 @@
+name: isrospaceapp
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+  firebase_auth: ^4.16.0
+  firebase_core: ^2.24.2
+  flutter:
+    sdk: flutter
+  http: ^1.2.2
+  provider: ^6.1.2
+  google_sign_in: ^6.1.5
+  googleapis: ^11.4.0
+  google_generative_ai: ^0.4.4
+  html: ^0.15.4
+  cached_network_image: ^3.4.0
+  cloud_firestore: ^4.14.0
+  hive: ^2.2.3
+  shared_preferences: ^2.3.1
+  hive_flutter: ^1.1.0
+  path_provider: ^2.1.4
+  json_annotation: ^4.9.0
+  build_runner: ^2.4.12
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  hive_generator : ^1.1.0
+
+flutter:
+  assets:
+    - assets/bg.jpg
+    - assets/google.png
+    - assets/Sat.json
+
+
+  uses-material-design: true
+
+

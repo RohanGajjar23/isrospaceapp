@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "672229652411",
+    "project_id": "spacexplorer-e2f45",
+    "storage_bucket": "spacexplorer-e2f45.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:672229652411:android:963b89ec1bd6299f34f69e",
+        "android_client_info": {
+          "package_name": "com.example.isrospaceapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "672229652411-dlka5jlrvbantlec1ivicb1d7nd2jno7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.isrospaceapp",
+            "certificate_hash": "4e2f839dcf3d2d0276c3d8cae3c2627b8e3091a3"
+          }
+        },
+        {
+          "client_id": "672229652411-2aujhi194sj31flvutnrc6jmg5c1tp6e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhofLT7k4EXJ7egX-WTv4Dmp6fmUEkRZw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "672229652411-2aujhi194sj31flvutnrc6jmg5c1tp6e.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "672229652411-rqds49qqjpvvb12aavvfqo60mb89tb5h.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.isrospaceapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
