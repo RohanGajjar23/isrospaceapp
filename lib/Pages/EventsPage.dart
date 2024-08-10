@@ -81,7 +81,7 @@ class _EventspageState extends State<Eventspage> {
                             ]),
                         child: ListTile(
                           title: Text(
-                            launch.name!,
+                            launch.name != null ? launch.name! : "Name Unavailable",
                             style:
                                 Theme.of(context).textTheme.bodyLarge!.copyWith(
                                       fontSize: size.height / 40,
@@ -92,7 +92,7 @@ class _EventspageState extends State<Eventspage> {
                           subtitle: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              launch.windowStart!.toString(),
+                              launch.windowStart != null ? launch.windowStart!.toString() : "Date Unavailable",
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyLarge!
@@ -105,14 +105,14 @@ class _EventspageState extends State<Eventspage> {
                           leading: Container(
                             width: size.width / 4,
                             height: size.height / 20,
-                            child: CachedNetworkImage(
+                            child: launch.image != null ?CachedNetworkImage(
                               imageUrl: launch.image!,
                               fit: BoxFit.cover,
                               placeholder: (context, url) =>
                                   Center(child: CircularProgressIndicator()),
                               errorWidget: (context, url, error) =>
                                   Icon(Icons.error),
-                            ),
+                            ) : Icon(Icons.error),
                           ),
                           // trailing: InkWell(
                           //     onTap: () {},

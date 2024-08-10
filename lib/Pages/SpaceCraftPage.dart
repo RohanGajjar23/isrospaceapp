@@ -135,10 +135,10 @@ class _SpaceCraftPageState extends State<SpaceCraftPage> {
                                           ),
                                     ),
                                   ),
-                                  leading: Container(
-                                    width: size.width / 4,
-                                    height: size.height / 20,
-                                    child: Image.memory(Spaceapi.shared.spacecrafts[index].imageUrl),
+                                  // leading: Container(
+                                  //   width: size.width / 4,
+                                  //   height: size.height / 20,
+                                  //   child: Image.memory(Spaceapi.shared.spacecrafts[indexageUrl),
                                     // child: CachedNetworkImage(
                                     //   imageUrl: Spaceapi.shared.spacecrafts[index].imageUrl,
                                     //   fit: BoxFit.cover,
@@ -147,7 +147,7 @@ class _SpaceCraftPageState extends State<SpaceCraftPage> {
                                     //   errorWidget: (context, url, error) =>
                                     //       Icon(Icons.error),
                                     // ),
-                                  ),
+                                  // ),
                                   // trailing: InkWell(
                                   //     onTap: () {},
                                   //     child: Icon(Icons.arrow_forward_ios_outlined)),

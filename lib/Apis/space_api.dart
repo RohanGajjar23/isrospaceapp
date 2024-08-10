@@ -140,14 +140,14 @@ class Spaceapi {
       final jsonData = jsonDecode(response.body) as List;
       spacecrafts = jsonData.map((data) => Spacecraft.fromJson(data)).toList();
       for (var spacecraft in spacecrafts) {
-        var request = http.MultipartRequest('POST', textToImageBase)
-          ..headers['x-api-key'] = textToImageAPI
-          ..fields['prompt'] =
-              spacecraft.name! + " " + spacecraft.launchVehicle!;
+        // var request = http.MultipartRequest('POST', textToImageBase)
+        //   ..headers['x-api-key'] = textToImageAPI
+        //   ..fields['prompt'] =
+        //       spacecraft.name! + " " + spacecraft.launchVehicle!;
 
-        final gresponse = await request.send();
-        final bytes = await gresponse.stream.toBytes();
-        spacecraft.imageUrl = bytes;
+        // final gresponse = await request.send();
+        // final bytes = await gresponse.stream.toBytes();
+        // spacecraft.imageUrl = bytes;
         log(spacecraft.name.toString() + "  " + spacecraft.link.toString());
       }
       await FetchAllEvents();
