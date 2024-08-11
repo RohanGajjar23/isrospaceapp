@@ -15,12 +15,16 @@ Planetary Database: Explore the wonders of the universe with our extensive datab
 ## Prototype
 
 Youtube Video Link : https://youtu.be/dsGAyjDlQeQ
-<img src = "assets/1.jpg" alt="error" width = "100"/> 
-![Alt text](assets/1.jpg) ![Alt text](assets/2.jpg)
-![Alt text](assets/3.jpg) ![Alt text](assets/4.jpg)
-![Alt text](assets/5.jpg) ![Alt text](assets/6.jpg)
-![Alt text](assets/7.jpg) ![Alt text](assets/8.jpg)
-![Alt text](assets/9.jpg) ![Alt text](assets/10.jpg)
+<img src = "assets/1.jpg" alt="error" width = "200"/> 
+<img src = "assets/2.jpg" alt="error" width = "200"/> 
+<img src = "assets/3.jpg" alt="error" width = "200"/> 
+<img src = "assets/4.jpg" alt="error" width = "200"/> 
+<img src = "assets/5.jpg" alt="error" width = "200"/> 
+<img src = "assets/6.jpg" alt="error" width = "200"/> 
+<img src = "assets/7.jpg" alt="error" width = "200"/> 
+<img src = "assets/8.jpg" alt="error" width = "200"/> 
+<img src = "assets/9.jpg" alt="error" width = "200"/> 
+<img src = "assets/10.jpg" alt="error" width = "200"/> 
 
  
 
