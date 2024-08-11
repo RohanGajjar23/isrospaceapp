@@ -6,11 +6,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:hive/hive.dart';
 import 'package:isrospaceapp/Models/Launch.dart';
 // import 'package:isrospaceapp/Models/Launch.dart';
 import 'package:isrospaceapp/Models/satelliteMission.dart';
 import 'package:isrospaceapp/Models/spacecraft.dart';
 import 'package:http/http.dart' as http;
+import 'package:isrospaceapp/Providers/EventsProvider.dart';
 import 'package:isrospaceapp/Providers/loadingprovider.dart';
 import 'package:provider/provider.dart';
 import 'package:html/parser.dart' as html_parser;
@@ -38,7 +40,7 @@ class Spaceapi {
   final apiKey = Platform.environment[geminiAPI];
   final model = GenerativeModel(model: 'gemini-1.5-flash', apiKey: geminiAPI);
 
-  Future<void> FetchAllEvents() async {
+  Future<void> FetchAllEvents(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? lastFetchTime = prefs.getString('lastFetchTime');
 
@@ -49,14 +51,16 @@ class Spaceapi {
         log('Using cached data');
         List<Launch> cachedEvents = await getCachedEvents();
         // Process cached events as needed
-        for (var eventName in cachedEvents) {
-          log('Cached Event: ${eventName.name} at ${eventName.net}');
-        }
+        // for (var eventName in cachedEvents) {
+        // log('Cached Event: ${eventName.name} at ${eventName.net}');
+        // }
         events = cachedEvents
             .where((event) =>
                 event.net != null && event.net!.isAfter(DateTime.now()))
             .toList()
           ..sort((a, b) => a.net!.compareTo(b.net!));
+        log("Done Loading from Cached");
+        Provider.of<Eventsprovider>(context, listen: false).setLoading(false);
         return;
       }
     }
@@ -89,6 +93,7 @@ class Spaceapi {
 
     // Store the fetch time
     await prefs.setString('lastFetchTime', DateTime.now().toIso8601String());
+    Provider.of<Eventsprovider>(context, listen: false).setLoading(false);
   }
   // Future<void> FetchAllEvents() async {
   //   String? nextUrl = baseEventsURL;
@@ -150,21 +155,41 @@ class Spaceapi {
         // spacecraft.imageUrl = bytes;
         log(spacecraft.name.toString() + "  " + spacecraft.link.toString());
       }
-      await FetchAllEvents();
+      await FetchAllEvents(context);
       Provider.of<Loadingprovider>(context, listen: false).updateLoading(false);
     } else {
       throw Exception('Failed to fetch spacecrafts: ${response.statusCode}');
     }
   }
 
-  Future<void> fetchNasaPictureofDay() async {
-    http.Response response = await http.get(Uri.parse(nasaPictureofDayURL));
-    if (response.statusCode == 200) {
-      final jsonData = jsonDecode(response.body);
-      nasaPictureofDay = jsonData['url'];
+  Future<String> getNasaPictureofDay() async {
+    var box = Hive.box<String>('nasaBox');
+
+    // Check if the image URL is in cache
+    String? cachedUrl = box.get('nasaPictureUrl');
+
+    if (cachedUrl != null) {
+      // Return the cached URL if available
+      log('Returning cached URL');
+      nasaPictureofDay = cachedUrl;
+      return cachedUrl;
     } else {
-      throw Exception(
-          'Failed to fetch picture of the day: ${response.statusCode}');
+      // Fetch the image URL from the API
+      log('Fetching from API');
+      http.Response response = await http.get(Uri.parse(nasaPictureofDayURL));
+
+      if (response.statusCode == 200) {
+        final jsonData = jsonDecode(response.body);
+        final imageUrl = jsonData['url'];
+
+        // Cache the URL using Hive
+        await box.put('nasaPictureUrl', imageUrl);
+        nasaPictureofDay = imageUrl;
+        return imageUrl;
+      } else {
+        throw Exception(
+            'Failed to fetch picture of the day: ${response.statusCode}');
+      }
     }
   }
 

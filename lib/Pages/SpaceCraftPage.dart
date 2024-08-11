@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:isrospaceapp/Apis/space_api.dart';
 import 'package:isrospaceapp/Models/satelliteModel.dart';
 import 'package:isrospaceapp/Models/spacecraft.dart';
+import 'package:isrospaceapp/Pages/SatellitesDetailedPage.dart';
 
 class SpaceCraftPage extends StatefulWidget {
   SpaceCraftPage({super.key});
@@ -22,6 +23,10 @@ class _SpaceCraftPageState extends State<SpaceCraftPage> {
       appBar: AppBar(
         title: Text('Space Crafts', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.black87,
+
+        iconTheme: IconThemeData(
+          color: Colors.red, // Set your desired color here
+        ),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -94,51 +99,62 @@ class _SpaceCraftPageState extends State<SpaceCraftPage> {
                           child: ListView.builder(
                             itemCount: models.length,
                             itemBuilder: (context, index) {
-                              return Container(
-                                margin: const EdgeInsets.all(8.0),
-                                width: size.width / 1.2,
-                                height: size.height / 10,
-                                decoration: const BoxDecoration(
-                                    color: Colors.white10,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20)),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black54,
-                                        blurRadius: 5.0,
-                                        spreadRadius: 1.0,
-                                        offset: Offset(1.0, 1.0),
-                                      )
-                                    ]),
-                                child: ListTile(
-                                  title: Text(
-                                    models[index].name,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .copyWith(
-                                          fontSize: size.height / 40,
-                                          overflow: TextOverflow.ellipsis,
-                                          color: Colors.white,
-                                        ),
-                                  ),
-                                  subtitle: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      models[index].country.toString(),
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SatellitesDetailedPage(
+                                        satelliteModel: models[index],
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.all(8.0),
+                                  width: size.width / 1.2,
+                                  height: size.height / 10,
+                                  decoration: const BoxDecoration(
+                                      color: Colors.white10,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(20)),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black54,
+                                          blurRadius: 5.0,
+                                          spreadRadius: 1.0,
+                                          offset: Offset(1.0, 1.0),
+                                        )
+                                      ]),
+                                  child: ListTile(
+                                    title: Text(
+                                      models[index].name,
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyLarge!
                                           .copyWith(
-                                            fontSize: size.height / 50,
+                                            fontSize: size.height / 40,
+                                            overflow: TextOverflow.ellipsis,
                                             color: Colors.white,
                                           ),
                                     ),
-                                  ),
-                                  // leading: Container(
-                                  //   width: size.width / 4,
-                                  //   height: size.height / 20,
-                                  //   child: Image.memory(Spaceapi.shared.spacecrafts[indexageUrl),
+                                    subtitle: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        models[index].country.toString(),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge!
+                                            .copyWith(
+                                              fontSize: size.height / 50,
+                                              color: Colors.white,
+                                            ),
+                                      ),
+                                    ),
+                                    // leading: Container(
+                                    //   width: size.width / 4,
+                                    //   height: size.height / 20,
+                                    //   child: Image.memory(Spaceapi.shared.spacecrafts[indexageUrl),
                                     // child: CachedNetworkImage(
                                     //   imageUrl: Spaceapi.shared.spacecrafts[index].imageUrl,
                                     //   fit: BoxFit.cover,
@@ -147,10 +163,11 @@ class _SpaceCraftPageState extends State<SpaceCraftPage> {
                                     //   errorWidget: (context, url, error) =>
                                     //       Icon(Icons.error),
                                     // ),
-                                  // ),
-                                  // trailing: InkWell(
-                                  //     onTap: () {},
-                                  //     child: Icon(Icons.arrow_forward_ios_outlined)),
+                                    // ),
+                                    // trailing: InkWell(
+                                    //     onTap: () {},
+                                    //     child: Icon(Icons.arrow_forward_ios_outlined)),
+                                  ),
                                 ),
                               );
                             },

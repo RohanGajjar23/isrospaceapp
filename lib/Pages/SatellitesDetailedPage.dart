@@ -1,17 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:isrospaceapp/Models/Launch.dart';
+import 'package:isrospaceapp/Models/satelliteModel.dart';
 import 'package:isrospaceapp/Pages/Utilities/GridLayoutPage.dart';
 
-class DetailedPage extends StatefulWidget {
-  final Launch launch;
-  DetailedPage({super.key, required this.launch});
+class SatellitesDetailedPage extends StatefulWidget {
+  SatelliteModel satelliteModel;
+  SatellitesDetailedPage({super.key, required this.satelliteModel});
 
   @override
-  State<DetailedPage> createState() => _DetailedPageState();
+  State<SatellitesDetailedPage> createState() => _SatellitesDetailedPageState();
 }
 
-class _DetailedPageState extends State<DetailedPage> {
+class _SatellitesDetailedPageState extends State<SatellitesDetailedPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -53,7 +53,7 @@ class _DetailedPageState extends State<DetailedPage> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  widget.launch.name!,
+                  widget.satelliteModel.name,
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         fontSize: size.height / 20,
                         fontWeight: FontWeight.bold,
@@ -73,15 +73,15 @@ class _DetailedPageState extends State<DetailedPage> {
                     )
                   ],
                 ),
-                child: Center(
-                  child: CachedNetworkImage(
-                    width: size.width / 1.125,
-                    height: size.height / 3,
-                    imageUrl: widget.launch.image!,
-                    placeholder: (context, url) => CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
-                  ),
-                ),
+                // child: Center(
+                //   child: CachedNetworkImage(
+                //     width: size.width / 1.125,
+                //     height: size.height / 3,
+                //     imageUrl: widget.launch.image!,
+                //     placeholder: (context, url) => CircularProgressIndicator(),
+                //     errorWidget: (context, url, error) => Icon(Icons.error),
+                //   ),
+                // ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -89,26 +89,23 @@ class _DetailedPageState extends State<DetailedPage> {
                   spacing: 10.0,
                   runSpacing: 10.0,
                   children: [
-                    GridLayoutPage(title: 'Name', value: widget.launch.name!),
+                    GridLayoutPage(title: 'Name', value: widget.satelliteModel.name!),
                     GridLayoutPage(
-                        title: 'Mission', value: widget.launch.mission!.name!),
+                        title: 'Owner', value: widget.satelliteModel.owner),
                     GridLayoutPage(
-                        title: 'Launch Date',
-                        value: widget.launch.windowStart!.toString()),
+                        title: 'Date',
+                        value: widget.satelliteModel.date.toString()),
                     GridLayoutPage(
-                        title: 'Status', value: widget.launch.status!.name!),
+                        title: 'Country', value: widget.satelliteModel.country),
                     GridLayoutPage(
-                        title: 'Rocket',
-                        value: widget.launch.rocket!.configuration!.name!),
-                    GridLayoutPage(title: 'Type', value: widget.launch.type!),
-                    GridLayoutPage(title: 'Orbit', value: widget.launch.orbit ?? "UnAvailable"),
+                        title: 'Purpose',
+                        value: widget.satelliteModel.purpose),
+                    GridLayoutPage(title: 'Users', value:widget.satelliteModel.users),
+                    GridLayoutPage(title: 'Orbit', value: widget.satelliteModel.orbit),
                     GridLayoutPage(
-                        title: 'Launch Pad',
-                        value: widget.launch.pad!.name!),
+                        title: 'source',
+                        value: widget.satelliteModel.source),
 
-                    GridLayoutPage(title: 'Id', value: widget.launch.id!),
-                    GridLayoutPage(
-                        title: 'Last Updated', value: widget.launch.lastUpdated!.toString()),
 
                   ],
                 ),

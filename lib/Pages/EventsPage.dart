@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:isrospaceapp/Apis/loginapi.dart';
 import 'package:isrospaceapp/Apis/space_api.dart';
 import 'package:isrospaceapp/Models/Launch.dart';
+import 'package:isrospaceapp/Pages/DetailedPage.dart';
+import 'package:isrospaceapp/Providers/EventsProvider.dart';
+import 'package:isrospaceapp/Providers/NewsLoadingProvider.dart';
+import 'package:provider/provider.dart';
 
 class Eventspage extends StatefulWidget {
   const Eventspage({super.key});
@@ -14,12 +18,15 @@ class Eventspage extends StatefulWidget {
 class _EventspageState extends State<Eventspage> {
   @override
   Widget build(BuildContext context) {
+    final isLoading = context.watch<Eventsprovider>().isLoading;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text('Events', style: TextStyle(color: Colors.white)),
+        title: Text('Events', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.black87,
+        iconTheme: IconThemeData(
+          color: Colors.red, // Set your desired color here
+        ),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -58,70 +65,111 @@ class _EventspageState extends State<Eventspage> {
                 SizedBox(
                   height: size.height / 90,
                 ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: Spaceapi.shared.events.length,
-                    itemBuilder: (context, index) {
-                      Launch launch = Spaceapi.shared.events[index];
-
-                      return Container(
-                        margin: const EdgeInsets.all(8.0),
-                        width: size.width / 1.2,
-                        height: size.height / 10,
-                        decoration: const BoxDecoration(
-                            color: Colors.white10,
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black54,
-                                blurRadius: 5.0,
-                                spreadRadius: 1.0,
-                                offset: Offset(1.0, 1.0),
-                              )
-                            ]),
-                        child: ListTile(
-                          title: Text(
-                            launch.name != null ? launch.name! : "Name Unavailable",
-                            style:
-                                Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                      fontSize: size.height / 40,
-                                      overflow: TextOverflow.ellipsis,
-                                      color: Colors.white,
-                                    ),
-                          ),
-                          subtitle: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              launch.windowStart != null ? launch.windowStart!.toString() : "Date Unavailable",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(
-                                    fontSize: size.height / 50,
-                                    color: Colors.white,
-                                  ),
+                isLoading
+                    ? Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize
+                              .min, // This keeps the column as small as possible, centered
+                          children: [
+                            CircularProgressIndicator(),
+                            SizedBox(
+                                height:
+                                    10), // Adds some spacing between the indicator and the label
+                            Text(
+                              'Loading...\nIt may take long for First Time',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.grey), // Customize as needed
                             ),
-                          ),
-                          leading: Container(
-                            width: size.width / 4,
-                            height: size.height / 20,
-                            child: launch.image != null ?CachedNetworkImage(
-                              imageUrl: launch.image!,
-                              fit: BoxFit.cover,
-                              placeholder: (context, url) =>
-                                  Center(child: CircularProgressIndicator()),
-                              errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
-                            ) : Icon(Icons.error),
-                          ),
-                          // trailing: InkWell(
-                          //     onTap: () {},
-                          //     child: Icon(Icons.arrow_forward_ios_outlined)),
+                          ],
                         ),
-                      );
-                    },
-                  ),
-                ),
+                      )
+                    : Expanded(
+                        child: ListView.builder(
+                          itemCount: Spaceapi.shared.events.length,
+                          itemBuilder: (context, index) {
+                            Launch launch = Spaceapi.shared.events[index];
+
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        DetailedPage(launch: launch),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.all(8.0),
+                                width: size.width / 1.2,
+                                height: size.height / 10,
+                                decoration: const BoxDecoration(
+                                    color: Colors.white10,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20)),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black54,
+                                        blurRadius: 5.0,
+                                        spreadRadius: 1.0,
+                                        offset: Offset(1.0, 1.0),
+                                      )
+                                    ]),
+                                child: ListTile(
+                                  title: Text(
+                                    launch.name != null
+                                        ? launch.name!
+                                        : "Name Unavailable",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
+                                        .copyWith(
+                                          fontSize: size.height / 40,
+                                          overflow: TextOverflow.ellipsis,
+                                          color: Colors.white,
+                                        ),
+                                  ),
+                                  subtitle: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      launch.windowStart != null
+                                          ? launch.windowStart!.toString()
+                                          : "Date Unavailable",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge!
+                                          .copyWith(
+                                            fontSize: size.height / 60,
+                                            color: Colors.white,
+                                          ),
+                                    ),
+                                  ),
+                                  leading: Container(
+                                    width: size.width / 4,
+                                    height: size.height / 20,
+                                    child: launch.image != null
+                                        ? CachedNetworkImage(
+                                            imageUrl: launch.image!,
+                                            fit: BoxFit.cover,
+                                            placeholder: (context, url) => Center(
+                                                child:
+                                                    CircularProgressIndicator()),
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    Icon(Icons.error),
+                                          )
+                                        : Icon(Icons.error),
+                                  ),
+                                  // trailing: InkWell(
+                                  //     onTap: () {},
+                                  //     child: Icon(Icons.arrow_forward_ios_outlined)),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
               ],
             ),
           )),

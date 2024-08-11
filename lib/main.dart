@@ -1,11 +1,15 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:isrospaceapp/Apis/space_api.dart';
 import 'package:isrospaceapp/Models/Launch.dart';
 import 'package:isrospaceapp/Pages/AuthPage.dart';
+import 'package:isrospaceapp/Pages/homepage.dart';
+import 'package:isrospaceapp/Providers/EventsProvider.dart';
+import 'package:isrospaceapp/Providers/NewsLoadingProvider.dart';
 import 'package:isrospaceapp/Providers/loadingprovider.dart';
 import 'package:isrospaceapp/firebase_options.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +19,7 @@ Future<void> main() async {
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+  await Hive.openBox<String>('nasaBox');
   // Register the adapter for your model
   Hive.registerAdapter(LaunchAdapter());
   Hive.registerAdapter(StatusAdapter());
@@ -40,10 +45,29 @@ Future<void> main() async {
       ChangeNotifierProvider<Loadingprovider>(
         create: (context) => Loadingprovider(),
       ),
+      ChangeNotifierProvider<Newsloadingprovider>(
+        create: (context) => Newsloadingprovider(),
+      ),
+      ChangeNotifierProvider<Eventsprovider>(
+        create: (context) => Eventsprovider(),
+      ),
     ],
     child: MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: AuthPage(),
+      home: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.active) {
+            User? user = snapshot.data;
+            if (user == null) {
+              return AuthPage();
+            } else {
+              return HomePage(); // Directly return HomePage here
+            }
+          }
+          return CircularProgressIndicator(); // Loading
+        },
+      ),
     ),
   ));
 }

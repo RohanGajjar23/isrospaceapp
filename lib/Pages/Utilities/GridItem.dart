@@ -12,9 +12,20 @@ class GridItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => onTap(),
-      child: Card(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.black54,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black54,
+              blurRadius: 10.0,
+              spreadRadius: 1,
+              offset: Offset(1.0, 1.0),
+            )
+          ],
+        ),
         margin: EdgeInsets.all(16.0),
-        color: Colors.black54,
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,

@@ -37,4 +37,15 @@ class Loginapi {
     }
     return null;
   }
+
+  Future<void> signOut(BuildContext context) async {
+    try {
+      await googleSignIn.signOut();
+      await _firebaseAuth.signOut();
+      Provider.of<Loadingprovider>(context, listen: false).updatePOD(false);
+      Provider.of<Loadingprovider>(context, listen: false).updateSignIn(false);
+    } catch (error) {
+      print(error.toString());
+    }
+  }
 }
