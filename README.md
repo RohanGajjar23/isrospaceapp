@@ -11,10 +11,12 @@ ISRO Spacecraft and Satellites: Dive deep into the details of spacecraft and sat
 
 Planetary Database: Explore the wonders of the universe with our extensive database of planets. Get detailed information on planets within our solar system and beyond, including their composition, atmosphere, orbit, and any missions associated with them.
 
+Youtube Video Link : https://youtu.be/dsGAyjDlQeQ
+
 
 ## Prototype
 
-Youtube Video Link : https://youtu.be/dsGAyjDlQeQ
+
 <img src = "assets/1.jpg" alt="error" width = "200"/> 
 <img src = "assets/2.jpg" alt="error" width = "200"/> 
 <img src = "assets/3.jpg" alt="error" width = "200"/> 
