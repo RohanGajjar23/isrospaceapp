@@ -16,5 +16,5 @@ Planetary Database: Explore the wonders of the universe with our extensive datab
 
 Youtube Video Link : https://youtu.be/dsGAyjDlQeQ
 
-![My Image](https://drive.google.com/drive/folders/1kQ4TrkS_dE9nffxNFJJJpvtgqUFDvZ_6?usp=sharing)
+![Alt text](assets/1.jpg)
 
