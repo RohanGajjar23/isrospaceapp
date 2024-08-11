@@ -21,6 +21,7 @@ App Development Build Link : https://drive.google.com/file/d/1HeQ5SiNkbJiBxkEih4
 
 ## Prototype
 
+<img src = "assets/Screenshot 2024-08-11 165942.png" alt="error" width="200"/>
 
 <img src = "assets/1.jpg" alt="error" width = "200"/> 
 <img src = "assets/2.jpg" alt="error" width = "200"/> 
